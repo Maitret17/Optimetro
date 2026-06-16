@@ -1,15 +1,16 @@
 public class StationNode {
-    private String id;
+    private int id;
     private String name;
     private String line;
+    private int groupId; // For later usage on dijkstra
 
-    public StationNode(String id, String name, String line) {
+    public StationNode(int id, String name, String line) {
         this.id = id;
         this.name = name;
         this.line = line;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
