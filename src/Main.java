@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, RATEfrei");
+        System.out.println("Hello, RATEFREI");
         Graph graph = new Graph();
 
         // Line A / red
