@@ -39,6 +39,6 @@ public class Main {
         graph.addEdge(new Edge(cA, cC, TravelType.TRANSFER, 0, 0)); // C line A -> C line C
         graph.addEdge(new Edge(cB, cC, TravelType.TRANSFER, 0, 0)); // C line B -> C line C
 
-        graph.printGraph();
+        System.out.println(Dijkstra.shortestPath(graph, aA, fB, CostType.TIME));
     }
 }

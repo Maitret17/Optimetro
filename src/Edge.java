@@ -3,10 +3,10 @@ public class Edge {
     private StationNode stationB;
     private TravelType travelType;
 
-    private int timeCost;
+    private double timeCost;
     private double pollutionCost;
 
-    public Edge(StationNode stationA, StationNode stationB, TravelType travelType, int timeCost, double pollutionCost) {
+    public Edge(StationNode stationA, StationNode stationB, TravelType travelType, double timeCost, double pollutionCost) {
         this.stationA = stationA;
         this.stationB = stationB;
         this.travelType = travelType;
@@ -26,12 +26,22 @@ public class Edge {
         return travelType;
     }
 
-    public int getTimeCost() {
-        return timeCost;
-    }
+    public double getTimeCost() {
+        return timeCost; }
 
     public double getPollutionCost() {
         return pollutionCost;
+    }
+
+    public double getCost(CostType costType){
+        switch (costType) {
+            case TIME:
+                return getTimeCost();
+            case CARBON:
+                return getPollutionCost();
+            default:
+                throw new IllegalArgumentException("Unknown cost type");
+        }
     }
 
     public StationNode getOtherStation(StationNode current) {

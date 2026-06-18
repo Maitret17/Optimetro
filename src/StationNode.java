@@ -23,6 +23,25 @@ public class StationNode {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        /*if (this == obj) {
+            return true;
+        }*/
+
+        if (!(obj instanceof StationNode)) {
+            return false;
+        }
+
+        StationNode other = (StationNode) obj;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
+
+    @Override
     public String toString() {
         return name + " [" + line + "]";
     }
