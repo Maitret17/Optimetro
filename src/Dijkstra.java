@@ -59,7 +59,7 @@ public class Dijkstra {
 
         }
 
-        path.reversed();
+        Collections.reverse(path);
         return path;
     }
 }

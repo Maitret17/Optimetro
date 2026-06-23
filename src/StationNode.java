@@ -4,10 +4,11 @@ public class StationNode {
     private String line;
     private int groupId; // For later usage on dijkstra
 
-    public StationNode(int id, String name, String line) {
+    public StationNode(int id, String name, String line, int groupId) {
         this.id = id;
         this.name = name;
         this.line = line;
+        this.groupId = groupId;
     }
 
     public int getId() {
