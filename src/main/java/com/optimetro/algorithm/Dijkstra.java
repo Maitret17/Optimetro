@@ -1,3 +1,6 @@
+package com.optimetro.algorithm;
+
+import com.optimetro.model.*;
 import java.util.*;
 
 public class Dijkstra {

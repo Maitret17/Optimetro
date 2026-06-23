@@ -1,3 +1,5 @@
+package com.optimetro.model;
+
 public class Edge {
     private StationNode stationA;
     private StationNode stationB;

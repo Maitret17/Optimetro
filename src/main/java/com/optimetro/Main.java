@@ -1,3 +1,9 @@
+package com.optimetro;
+
+import com.optimetro.algorithm.Dijkstra;
+import com.optimetro.model.*;
+
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, RATEFREI");

@@ -1,3 +1,5 @@
+package com.optimetro.model;
+
 import java.util.*;
 
 public class Graph {

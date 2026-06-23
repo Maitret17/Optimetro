@@ -1,3 +1,5 @@
+package com.optimetro.model;
+
 public class StationNode {
     private int id;
     private String name;
