@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>itiéraire</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-
 </head>
 <body>
     <header> <!-- nom du site + lien pour les page itinéraires, CO2, alerte (si on garde ?) et historique (si on garde)? -->
@@ -21,6 +20,7 @@
     </header>
 
     <main class="main_itineraire"><!-- texte et affichage  -->
+        <div class="side_by_side">
         <section id="recherche_itineraire"> <!-- blabla recherche-->
             
             <form action="#" method="get">
@@ -92,12 +92,22 @@
         </section>
 
 
-        <section class=""> <!-- c'est la map ! -->
+        <section class="map"> <!-- c'est la map ! et j'ai la fleeeeemeeee-->
+            <h2>Détail du trajet</h2>
+
+            <div id="timeline_trajet" class="timeline_trajet">
+                <!-- Le JS ajoutera les stations ici -->
+            </div>
 
         </section>
+        </div>
+
 
     </main>
+    <script src="../script/script.js"></script>
+
 </body>
 
 <footer></footer>
 </html>
+
