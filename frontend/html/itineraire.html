@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>itiéraire</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+</head>
+<body>
+    <header> <!-- nom du site + lien pour les page itinéraires, CO2, alerte (si on garde ?) et historique (si on garde)? -->
+        <div id="titre">
+            <h1>AuptiMétro</h1>
+        </div>
+        <nav class="bandeau">
+            <a href="../html/itineraire.html">itinéraire</a>
+            <a href="../html/CO2.html">Bilan CO2</a>
+            <a href="">Alerte réseau</a>
+            <a href="">Historique</a>
+        </nav>
+    </header>
+
+    <main class="main_itineraire"><!-- texte et affichage  -->
+        <section id="recherche_itineraire"> <!-- blabla recherche-->
+            
+            <form action="#" method="get">
+                <h2>Rechercher un trajet</h2>
+                <div class="trajet-box">
+                    <div class="trajet-row">
+                        <span class="point depart"></span>
+                        <input
+                            type="text"
+                            name="depart"
+                            placeholder="Départ — EFREI Paris"
+                        >
+                    </div>
+
+                    <div class="trajet-row">
+                        <span class="point arrivee"></span>
+                        <input
+                            type="text"
+                            name="arrivee"
+                            placeholder="Arrivée — Châtelet"
+                        >
+                        
+                        <button type="button" class="swap" aria-label="Inverser départ et arrivée">
+                            ↕
+                        </button>
+                    </div>
+                </div>
+
+                <div class="trajet_mode">
+                    <button type="button" class="transport">Métro</button>
+                    <button type="button" class="transport">Bus</button>
+                    <button type="button" class="transport">Vélo</button>
+                    <button type="button" class="transport">Marche</button>
+                </div>
+
+                <button type="submit" class="trajet_submit">
+                    Calculer le trajet optimal
+                </button> 
+            </form>
+
+            <div class="trajet_result">
+                <p class="nbr_itineraire">Itinéraire trouver : <span id="nb_itineraires">0</span></p>
+                <div class="liste_itineraire">
+                    <!-- ça seras le boulot du backend
+                     btw, on donne combien de resultat en sortie ?-->
+                    <article class="itineraire" data-type="optimal">
+                        <div class="itineraire_header">
+                            <span class="badge">
+                                Optimal
+                            </span>
+
+                            <span class="co2">
+                                0.4 kg
+                            </span>
+                        </div>
+
+                        <h3 class="duree">
+                            18 min
+                        </h3>
+
+                        <p class="details">
+                            3 stations - 1 changement - L8 → L1
+                        </p>
+
+                    </article>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class=""> <!-- c'est la map ! -->
+
+        </section>
+
+    </main>
+</body>
+
+<footer></footer>
+</html>
