@@ -31,6 +31,18 @@ header{
     transition:.2s;
 }
 
+/*-----footer-----*/
+
+footer{
+    color: #8A8A8A;
+    align-items: end;
+    justify-content: space-around;
+    margin-top: 5em;
+    border-radius: 20px;
+    border: 1px solid #D8DDE5;
+    padding: 18px;
+}
+
 
 /*----- body -----*/
 .side_by_side{
