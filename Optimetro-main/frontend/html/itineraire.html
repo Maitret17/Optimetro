@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Itinéraire</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <div id="titre">
+        <h1>AuptiMétro</h1>
+      </div>
+
+      <nav class="bandeau">
+        <a href="../html/itineraire.html">Itinéraire</a>
+        <a href="../html/alerte.html">Alerte réseau</a>
+        <a href="../html/arborescence.html">Arborescence</a>
+      </nav>
+    </header>
+
+    <main class="main_itineraire">
+      <div class="side_by_side">
+        <section id="recherche_itineraire">
+          <form action="#" method="get">
+            <h2>Rechercher un trajet</h2>
+
+            <div class="trajet-box">
+              <div class="trajet-row">
+                <span class="point depart"></span>
+                <input
+                  type="text"
+                  name="depart"
+                  placeholder="Départ — EFREI Paris"
+                />
+              </div>
+
+              <div class="trajet-row">
+                <span class="point arrivee"></span>
+                <input
+                  type="text"
+                  name="arrivee"
+                  placeholder="Arrivée — Châtelet"
+                />
+
+                <button
+                  type="button"
+                  class="swap"
+                  aria-label="Inverser départ et arrivée"
+                >
+                  ↕
+                </button>
+              </div>
+            </div>
+
+            <div class="trajet_mode">
+              <button type="button" class="transport">Métro</button>
+              <button type="button" class="transport">RER / TER</button>
+              <button type="button" class="transport">Tramway</button>
+            </div>
+
+            <button type="submit" class="trajet_submit">
+              Calculer le trajet optimal
+            </button>
+          </form>
+
+          <div class="trajet_result">
+            <p class="nbr_itineraire">
+              Itinéraire trouvé : <span id="nb_itineraires">1</span>
+            </p>
+
+            <div class="liste_itineraire">
+              <article class="itineraire" data-type="optimal">
+                <div class="itineraire_header">
+                  <span class="badge">Optimal</span>
+                  <span class="co2">0.4 g</span>
+                </div>
+
+                <h3 class="duree">18 min</h3>
+
+                <p class="details">3 stations - 1 changement - L7 → L1</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="map-container">
+          <div id="map"></div>
+
+          <div class="fenetre-flottante">
+            <div class="fenetre-header">
+              <h2>Détail du trajet</h2>
+              <button
+                type="button"
+                class="fenetre-close"
+                aria-label="Fermer la fenêtre"
+              >
+                X
+              </button>
+            </div>
+            <div id="timeline_trajet" class="timeline_trajet"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../script/script.js"></script>
+  </body>
+</html>
