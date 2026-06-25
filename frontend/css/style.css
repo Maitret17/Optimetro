@@ -33,6 +33,12 @@ header{
 
 
 /*----- body -----*/
+.side_by_side{
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+}
+
 /*-----itinéraire -----*/
 /*----form-----*/
 #recherche_itineraire{
@@ -197,6 +203,7 @@ header{
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 }
 
 .nbr_itineraire{
@@ -279,4 +286,85 @@ header{
     color: #707070;
     font-size: .95rem;
     line-height: 1.4;
+}
+
+
+/*------ la map c zoli --------*/
+
+
+.map{
+    width: 340px;
+    background: white;
+    border: 1px solid #D8DDE5;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 25px;
+}
+
+.map h2{
+    margin: 0 0 18px;
+    font-size: 1.3rem;
+}
+
+.timeline_trajet{
+    display: flex;
+    flex-direction: column;
+}
+
+.etape{
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    column-gap: 12px;
+}
+
+.ligne_visuelle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.point_station{
+    width: 13px;
+    height: 13px;
+    border: 3px solid #2368A8;
+    background: white;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.segment{
+    width: 4px;
+    min-height: 42px;
+    background: #2368A8;
+}
+
+.contenu_station{
+    padding-bottom: 18px;
+}
+
+.nom_station{
+    margin: 0;
+    font-weight: 700;
+    color: #222;
+}
+
+.info_ligne{
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.changement{
+    margin-top: 8px;
+    padding: 6px 10px;
+    display: inline-block;
+    border-radius: 20px;
+    background: #FFF3D8;
+    color: #9A6500;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.etape:last-child .segment{
+    display: none;
 }
