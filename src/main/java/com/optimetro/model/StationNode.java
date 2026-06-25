@@ -48,4 +48,11 @@ public class StationNode {
     public String toString() {
         return name + " [" + line + "]";
     }
+
+    public void setGroupId(int groupId) {
+        this.groupId =groupId;
+    }
+    public int getGroupId() {
+        return groupId;
+    }
 }
