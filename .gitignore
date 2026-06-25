@@ -1,0 +1,22 @@
+# IntelliJ / JetBrains
+.idea/
+*.iml
+*.iws
+
+# Java compiled output
+out/
+*.class
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
