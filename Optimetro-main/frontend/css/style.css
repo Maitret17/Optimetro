@@ -387,3 +387,102 @@ header {
 .etape:last-child .segment {
   display: none;
 }
+
+/* alerte réseau */
+
+main {
+  padding: 30px 40px;
+}
+
+main h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+
+#alert_ratp {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.alerte_carte {
+  background: white;
+  border: 1px solid #d8dde5;
+  border-left: 5px solid #9b9b9b;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: 0.2s;
+}
+
+.alerte_carte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.alerte_carte[data-gravite="info"] {
+  border-left-color: #2368a8;
+}
+
+.alerte_carte[data-gravite="ralentissement"] {
+  border-left-color: #c98a1e;
+}
+
+.alerte_carte[data-gravite="interrompu"] {
+  border-left-color: #d94848;
+}
+
+.alerte_carte_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerte_ligne {
+  font-weight: 700;
+  color: #222;
+}
+
+.alerte_badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #efefef;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.alerte_carte[data-gravite="info"] .alerte_badge {
+  background: #d8ebff;
+  color: #2368a8;
+}
+
+.alerte_carte[data-gravite="ralentissement"] .alerte_badge {
+  background: #fff3d8;
+  color: #9a6500;
+}
+
+.alerte_carte[data-gravite="interrompu"] .alerte_badge {
+  background: #fbe0dd;
+  color: #d94848;
+}
+
+.alerte_description {
+  margin: 0;
+  color: #707070;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.alerte_meta {
+  margin: 0;
+  color: #9b9b9b;
+  font-size: 0.8rem;
+}
