@@ -121,3 +121,6 @@ document.addEventListener("mouseup", function () {
   isDragging = false;
   fenetre.style.cursor = "grab";
 });
+
+
+

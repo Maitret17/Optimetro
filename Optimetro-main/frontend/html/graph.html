@@ -18,12 +18,27 @@
         </nav>
     </header>
 
+    <main class="page_graph">
+        <section class="graph_section">
+            <h2>Graphe complet du réseau</h2>
 
-    </body>
+            <object id="graph_complet" class="graph_svg" data="../svg/graph.svg" type="image/svg+xml"> </object>
+        </section>
+
+        <section class="graph_section">
+            <h2>Arbre réduit / graphe géographique</h2>
+
+            <object id="graph_geo" class="graph_svg" data="../svg/graph_geographique.svg" type="image/svg+xml"> </object>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+        <script src="../script/graph.js"></script>
+    </main>
 
     <footer>
-        <a href="../html/apropos.html">A propos</a>
         <p>©2026 | Projet Métro-EFREI-Dodo | Mastercamp IT4 groupe B</p>
 
     </footer>
+    </body>
+
+    
 </html>
