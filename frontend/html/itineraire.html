@@ -29,13 +29,14 @@
     <main class="main_itineraire">
       <div class="side_by_side">
         <section id="recherche_itineraire">
-          <form action="#" method="get">
+            <form id="route-form" action="#" method="get">
             <h2>Rechercher un trajet</h2>
 
             <div class="trajet-box">
               <div class="trajet-row">
                 <span class="point depart"></span>
                 <input
+                  id="depart-input"
                   type="text"
                   name="depart"
                   placeholder="Départ — EFREI Paris"
@@ -45,6 +46,7 @@
               <div class="trajet-row">
                 <span class="point arrivee"></span>
                 <input
+                  id="arrivee-input"
                   type="text"
                   name="arrivee"
                   placeholder="Arrivée — Châtelet"
@@ -76,7 +78,7 @@
               Itinéraire trouvé : <span id="nb_itineraires">1</span>
             </p>
 
-            <div class="liste_itineraire">
+            <div class="liste_itineraire" id="route-results">
               <article class="itineraire" data-type="optimal">
                 <div class="itineraire_header">
                   <span class="badge">Optimal</span>

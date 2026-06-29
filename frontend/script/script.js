@@ -81,8 +81,83 @@ function afficherCarte(trajet) {
   });
 }
 
-afficherTrajet(trajetTest);
-afficherCarte(trajetTest);
+function convertirRouteBackend(route) {
+  const trajet = [];
+
+  route.forEach((edge, index) => {
+    if (index === 0) {
+      trajet.push({
+        station: edge.stationA.name,
+        ligne: edge.stationA.line,
+        changement: edge.travelType === "TRANSFER",
+      });
+    }
+
+    trajet.push({
+      station: edge.stationB.name,
+      ligne: edge.stationB.line,
+      changement: edge.travelType === "TRANSFER",
+    });
+  });
+
+  return trajet;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  afficherTrajet(trajetTest);
+  afficherCarte(trajetTest);
+
+  const form = document.getElementById("route-form");
+  const results = document.getElementById("route-results");
+
+  if (!form || !results) {
+    console.warn("Formulaire ou zone de résultat introuvable.");
+    return;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(
+          "http://localhost:8080/api/route?from=2&to=8&costType=TIME"
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur backend");
+      }
+
+      const route = await response.json();
+      const trajet = convertirRouteBackend(route);
+
+      afficherTrajet(trajet);
+
+      results.innerHTML = `
+        <article class="itineraire" data-type="optimal">
+          <div class="itineraire_header">
+            <span class="badge">Optimal</span>
+            <span class="co2">Backend</span>
+          </div>
+
+          <h3 class="duree">${route.length} étapes</h3>
+
+          <p class="details">
+            ${trajet.map(etape => `${etape.station} (${etape.ligne})`).join(" → ")}
+          </p>
+        </article>
+      `;
+    } catch (error) {
+      console.error(error);
+
+      results.innerHTML = `
+        <article class="itineraire">
+          <h3>Erreur</h3>
+          <p>Impossible de récupérer l'itinéraire depuis le backend.</p>
+        </article>
+      `;
+    }
+  });
+});
 
 const fenetre = document.querySelector(".fenetre-flottante");
 const closeButton = document.querySelector(".fenetre-close");
