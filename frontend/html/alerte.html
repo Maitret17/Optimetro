@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerte AuptiMetro</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../script/alert.js"></script>
+</head>
+<body>
+    <header> <!-- nom du site + lien pour les page itinéraires, CO2, alerte (si on garde ?) et historique (si on garde)? -->
+        <div id="titre">
+            <h1>AuptiMétro</h1>
+        </div>
+        <nav class="bandeau">
+            <a href="../html/itineraire.html">Itinéraire</a>
+            <a href="../html/alerte.html">Alerte réseau</a>
+            <a href="../html/graph.html">Graphe</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Alerte RATP</h2>
+        <div id="alert_ratp">
+
+            <div class="alerte_carte" data-gravite="interrompu">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">Ligne 7</span>
+                    <span class="alerte_badge">Trafic interrompu</span>
+                </div>
+                <p class="alerte_description">Trafic interrompu entre Maison Blanche et Villejuif Louis Aragon, suite à un incident voyageur.</p>
+                <p class="alerte_meta">Mis à jour il y a 12 min</p>
+            </div>
+
+            <div class="alerte_carte" data-gravite="ralentissement">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">RER C</span>
+                    <span class="alerte_badge">Ralentissement</span>
+                </div>
+                <p class="alerte_description">Trafic ralenti dans les deux sens en raison d'un défaut d'alimentation électrique à hauteur de Choisy-le-Roi.</p>
+                <p class="alerte_meta">Mis à jour il y a 25 min</p>
+            </div>
+
+            <div class="alerte_carte" data-gravite="info">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">Tramway T9</span>
+                    <span class="alerte_badge">Information</span>
+                </div>
+                <p class="alerte_description">Affluence importante attendue en raison d'un évènement à proximité de Porte de Choisy.</p>
+                <p class="alerte_meta">Mis à jour il y a 40 min</p>
+            </div>
+
+            <div class="alerte_carte" data-gravite="ralentissement">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">Ligne 13</span>
+                    <span class="alerte_badge">Ralentissement</span>
+                </div>
+                <p class="alerte_description">Trafic perturbé entre Saint-Denis Université et Saint-Lazare en raison d'un mouvement social.</p>
+                <p class="alerte_meta">Mis à jour il y a 55 min</p>
+            </div>
+
+            <div class="alerte_carte" data-gravite="interrompu">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">RER B</span>
+                    <span class="alerte_badge">Trafic interrompu</span>
+                </div>
+                <p class="alerte_description">Trafic interrompu entre Aulnay-sous-Bois et Charles de Gaulle Aéroport 2, suite à un colis suspect.</p>
+                <p class="alerte_meta">Mis à jour il y a 1 h</p>
+            </div>
+
+            <div class="alerte_carte" data-gravite="info">
+                <div class="alerte_carte_header">
+                    <span class="alerte_ligne">Métro 1</span>
+                    <span class="alerte_badge">Information</span>
+                </div>
+                <p class="alerte_description">Service normal. Renfort de rames aux heures de pointe.</p>
+                <p class="alerte_meta">Mis à jour il y a 1 h 15</p>
+            </div>
+
+        </div>
+
+    </main>
+    
+    <footer>
+        
+        <p>©2026 | Projet Métro-EFREI-Dodo | Mastercamp IT4 groupe B</p>
+
+    </footer>
+
+</body>
+
+
+
+</html>
