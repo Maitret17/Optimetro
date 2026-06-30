@@ -1,19 +1,19 @@
 package com.optimetro.model;
 
 public class StationNode {
-    private int id;
+    private String id;
     private String name;
     private String line;
     private int groupId; // For later usage on dijkstra
 
-    public StationNode(int id, String name, String line, int groupId) {
+    public StationNode(String id, String name, String line, int groupId) {
         this.id = id;
         this.name = name;
         this.line = line;
         this.groupId = groupId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -27,21 +27,21 @@ public class StationNode {
 
     @Override
     public boolean equals(Object obj) {
-        /*if (this == obj) {
+        if (this == obj) {
             return true;
-        }*/
+        }
 
         if (!(obj instanceof StationNode)) {
             return false;
         }
 
         StationNode other = (StationNode) obj;
-        return this.id == other.id;
+        return this.id.equals(other.id);
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(id);
+        return id.hashCode();
     }
 
     @Override

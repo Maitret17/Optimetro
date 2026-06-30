@@ -27,8 +27,8 @@ public class RouteController {
 
     @GetMapping("/route")
     public ArrayList<Edge> getRoute(
-            @RequestParam int from,
-            @RequestParam int to,
+            @RequestParam String from,
+            @RequestParam String to,
             @RequestParam CostType costType
     ) {
         return routeService.findRoute(from, to, costType);

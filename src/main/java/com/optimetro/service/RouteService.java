@@ -14,7 +14,7 @@ public class RouteService {
         this.graphService = graphService;
     }
 
-    public ArrayList<Edge> findRoute(int fromId, int toId, CostType costType) {
+    public ArrayList<Edge> findRoute(String fromId, String toId, CostType costType) {
         StationNode from = graphService.getStationById(fromId);
         StationNode to = graphService.getStationById(toId);
 

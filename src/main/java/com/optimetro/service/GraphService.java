@@ -9,7 +9,7 @@ import java.util.HashMap;
 @Service
 public class GraphService {
     private final Graph graph;
-    private final HashMap<Integer, StationNode> stationsById;
+    private final HashMap<String, StationNode> stationsById;
 
     public GraphService() {
         this.graph = new Graph();
@@ -25,7 +25,7 @@ public class GraphService {
         return stationsById.values();
     }
 
-    public StationNode getStationById(int id) {
+    public StationNode getStationById(String id) {
         return stationsById.get(id);
     }
 
@@ -39,19 +39,19 @@ public class GraphService {
     }
 
     private void buildTestGraph() {
-        StationNode gA = new StationNode(1, "G", "A", 100);
-        StationNode aA = new StationNode(2, "A", "A", 200);
-        StationNode cA = new StationNode(3, "C", "A", 300);
-        StationNode dA = new StationNode(4, "D", "A", 400);
+        StationNode gA = new StationNode("1", "G", "A", 100);
+        StationNode aA = new StationNode("2", "A", "A", 200);
+        StationNode cA = new StationNode("3", "C", "A", 300);
+        StationNode dA = new StationNode("4", "D", "A", 400);
 
-        StationNode eB = new StationNode(5, "E", "B", 500);
-        StationNode cB = new StationNode(6, "C", "B", 300);
-        StationNode bB = new StationNode(7, "B", "B", 700);
-        StationNode fB = new StationNode(8, "F", "B", 800);
+        StationNode eB = new StationNode("5", "E", "B", 500);
+        StationNode cB = new StationNode("6", "C", "B", 300);
+        StationNode bB = new StationNode("7", "B", "B", 700);
+        StationNode fB = new StationNode("8", "F", "B", 800);
 
-        StationNode gC = new StationNode(9, "G", "C", 100);
-        StationNode eC = new StationNode(10, "E", "C", 500);
-        StationNode cC = new StationNode(11, "C", "C", 300);
+        StationNode gC = new StationNode("9", "G", "C", 100);
+        StationNode eC = new StationNode("10", "E", "C", 500);
+        StationNode cC = new StationNode("11", "C", "C", 300);
 
         addStation(gA);
         addStation(aA);
