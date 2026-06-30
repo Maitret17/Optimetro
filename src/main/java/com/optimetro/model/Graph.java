@@ -1,10 +1,12 @@
 package com.optimetro.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Graph {
     private final ArrayList<Edge> edges;
-    private final HashMap<StationNode, ArrayList<Edge>> adjacencyList; //dict of list with each station neighbor
+    private final HashMap<StationNode, ArrayList<Edge>> adjacencyList;
 
     public Graph() {
         this.edges = new ArrayList<>();
@@ -16,27 +18,32 @@ public class Graph {
     }
 
     public void addEdge(Edge edge) {
-        StationNode stationA = edge.getStationA();
-        StationNode stationB = edge.getStationB();
+        StationNode from = edge.getFromStation();
+        StationNode to = edge.getToStation();
 
-        addStation(stationA); // Make sure that each station exist in the dictionary
-        addStation(stationB);
+        addStation(from);
+        addStation(to);
 
         edges.add(edge);
 
-        adjacencyList.get(stationA).add(edge);
-        adjacencyList.get(stationB).add(edge);
+        // Directed edge: only from -> to
+        adjacencyList.get(from).add(edge);
+    }
+
+    public void addBidirectionalEdge(StationNode stationA, StationNode stationB, TravelType travelType, double timeCost, double pollutionCost) {
+        addEdge(new Edge(stationA, stationB, travelType, timeCost, pollutionCost));
+        addEdge(new Edge(stationB, stationA, travelType, timeCost, pollutionCost));
     }
 
     public ArrayList<Edge> getEdges() {
         return edges;
     }
 
-    public ArrayList<Edge> getNeighbors(StationNode station) { // return the list of edge reachable from this station, otherwise return an empty list
+    public ArrayList<Edge> getNeighbors(StationNode station) {
         return adjacencyList.getOrDefault(station, new ArrayList<>());
     }
 
-    public Set<StationNode> getStations() { // return all the station stored in the dictionary
+    public Set<StationNode> getStations() {
         return adjacencyList.keySet();
     }
 
@@ -45,8 +52,7 @@ public class Graph {
             System.out.println(station + " :");
 
             for (Edge edge : adjacencyList.get(station)) {
-                StationNode neighbor = edge.getOtherStation(station);
-                System.out.println("  -> " + neighbor + " | " + edge);
+                System.out.println("  -> " + edge.getToStation() + " | " + edge);
             }
         }
     }

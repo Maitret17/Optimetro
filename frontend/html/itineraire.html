@@ -37,9 +37,10 @@
                 <span class="point depart"></span>
                 <input
                   id="depart-input"
+                  list="station-list"
                   type="text"
                   name="depart"
-                  placeholder="Départ — EFREI Paris"
+                  placeholder="Départ — A [A]"
                 />
               </div>
 
@@ -47,9 +48,10 @@
                 <span class="point arrivee"></span>
                 <input
                   id="arrivee-input"
+                  list="station-list"
                   type="text"
                   name="arrivee"
-                  placeholder="Arrivée — Châtelet"
+                  placeholder="Arrivée — F [B]"
                 />
 
                 <button
@@ -61,6 +63,8 @@
                 </button>
               </div>
             </div>
+
+            <datalist id="station-list"></datalist>
 
             <div class="trajet_mode">
               <button type="button" class="transport">Métro</button>

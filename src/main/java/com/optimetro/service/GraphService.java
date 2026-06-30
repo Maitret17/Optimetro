@@ -34,8 +34,8 @@ public class GraphService {
         graph.addStation(station);
     }
 
-    private void addEdge(Edge edge) {
-        graph.addEdge(edge);
+    private void addBidirectionalEdge(StationNode stationA, StationNode stationB, TravelType travelType, double timeCost, double pollutionCost) {
+        graph.addBidirectionalEdge(stationA, stationB, travelType, timeCost, pollutionCost);
     }
 
     private void buildTestGraph() {
@@ -65,22 +65,22 @@ public class GraphService {
         addStation(eC);
         addStation(cC);
 
-        addEdge(new Edge(gA, aA, TravelType.METRO, 3, 0));
-        addEdge(new Edge(aA, cA, TravelType.METRO, 2, 0));
-        addEdge(new Edge(cA, dA, TravelType.METRO, 2, 0));
+        addBidirectionalEdge(gA, aA, TravelType.METRO, 3, 0);
+        addBidirectionalEdge(aA, cA, TravelType.METRO, 2, 0);
+        addBidirectionalEdge(cA, dA, TravelType.METRO, 2, 0);
 
-        addEdge(new Edge(eB, cB, TravelType.METRO, 4, 0));
-        addEdge(new Edge(cB, bB, TravelType.METRO, 2, 0));
-        addEdge(new Edge(bB, fB, TravelType.METRO, 4, 0));
+        addBidirectionalEdge(eB, cB, TravelType.METRO, 4, 0);
+        addBidirectionalEdge(cB, bB, TravelType.METRO, 2, 0);
+        addBidirectionalEdge(bB, fB, TravelType.METRO, 4, 0);
 
-        addEdge(new Edge(gC, eC, TravelType.METRO, 4, 0));
-        addEdge(new Edge(eC, cC, TravelType.METRO, 2, 0));
+        addBidirectionalEdge(gC, eC, TravelType.METRO, 4, 0);
+        addBidirectionalEdge(eC, cC, TravelType.METRO, 2, 0);
 
-        addEdge(new Edge(gA, gC, TravelType.TRANSFER, 0, 0));
-        addEdge(new Edge(eB, eC, TravelType.TRANSFER, 0, 0));
+        addBidirectionalEdge(gA, gC, TravelType.TRANSFER, 0, 0);
+        addBidirectionalEdge(eB, eC, TravelType.TRANSFER, 0, 0);
 
-        addEdge(new Edge(cA, cB, TravelType.TRANSFER, 0, 0));
-        addEdge(new Edge(cA, cC, TravelType.TRANSFER, 0, 0));
-        addEdge(new Edge(cB, cC, TravelType.TRANSFER, 0, 0));
+        addBidirectionalEdge(cA, cB, TravelType.TRANSFER, 0, 0);
+        addBidirectionalEdge(cA, cC, TravelType.TRANSFER, 0, 0);
+        addBidirectionalEdge(cB, cC, TravelType.TRANSFER, 0, 0);
     }
 }

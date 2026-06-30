@@ -5,60 +5,66 @@ import com.optimetro.model.Edge;
 import com.optimetro.model.Graph;
 import com.optimetro.model.StationNode;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class Kruskal {
-    public static Graph Acpm(Graph graph, CostType costType){
-        ArrayList<Edge> edges = graph.getEdges();
-        edges.sort(Comparator.comparingDouble(o -> o.getCost(costType)));
-        int n = 0;
-        int group = 0;
+
+    public static Graph Acpm(Graph graph, CostType costType) {
+        ArrayList<Edge> edges = new ArrayList<>(graph.getEdges());
+        edges.sort(Comparator.comparingDouble(edge -> edge.getCost(costType)));
+
         Graph acpm = new Graph();
-        for(Edge e : edges){
-            e.getStationA().setGroupId(-1);
-            e.getStationB().setGroupId(-1);
+
+        HashMap<StationNode, StationNode> parent = new HashMap<>();
+
+        for (StationNode station : graph.getStations()) {
+            parent.put(station, station);
+            acpm.addStation(station);
         }
-        while (n<edges.size()){
 
-            boolean hasStationA = acpm.getStations().contains(edges.get(n).getStationA());
-            boolean hasStationB = acpm.getStations().contains(edges.get(n).getStationB());
-            if(!hasStationA && !hasStationB){
-                acpm.addEdge(edges.get(n));
-                edges.get(n).getStationB().setGroupId(group);
-                edges.get(n).getStationB().setGroupId(group);
-                acpm.addStation(edges.get(n).getStationA());
-                acpm.addStation(edges.get(n).getStationB());
-                group+=1;
-            } else if (hasStationB!=hasStationA) {
-                acpm.addEdge(edges.get(n));
-                if(hasStationA){
-                    edges.get(n).getStationB().setGroupId(edges.get(n).getStationA().getGroupId());
-                    acpm.addStation(edges.get(n).getStationB());
-                }
-                else{
-                    edges.get(n).getStationA().setGroupId(edges.get(n).getStationB().getGroupId());
-                    acpm.addStation(edges.get(n).getStationA());
-                }
+        for (Edge edge : edges) {
+            StationNode from = edge.getFromStation();
+            StationNode to = edge.getToStation();
 
+            StationNode rootFrom = find(parent, from);
+            StationNode rootTo = find(parent, to);
+
+            if (!rootFrom.equals(rootTo)) {
+                union(parent, rootFrom, rootTo);
+
+                acpm.addBidirectionalEdge(
+                        from,
+                        to,
+                        edge.getTravelType(),
+                        edge.getTimeCost(),
+                        edge.getPollutionCost()
+                );
             }
-            else{
-                int ga = edges.get(n).getStationA().getGroupId();
-                int gb= edges.get(n).getStationB().getGroupId();
-                if(ga!=gb){
-                    for(StationNode s : acpm.getStations()){
-                        if(s.getGroupId()==gb && s.getGroupId()!=-1) {
-                            s.setGroupId(ga);
-                        }
-                    }
-                }
-                //group+=1;
-            }
-            n+=1;
-
         }
+
         return acpm;
     }
 
+    private static StationNode find(HashMap<StationNode, StationNode> parent, StationNode station) {
+        StationNode stationParent = parent.get(station);
+
+        if (!stationParent.equals(station)) {
+            StationNode root = find(parent, stationParent);
+            parent.put(station, root);
+            return root;
+        }
+
+        return stationParent;
+    }
+
+    private static void union(HashMap<StationNode, StationNode> parent, StationNode stationA, StationNode stationB) {
+        StationNode rootA = find(parent, stationA);
+        StationNode rootB = find(parent, stationB);
+
+        if (!rootA.equals(rootB)) {
+            parent.put(rootB, rootA);
+        }
+    }
 }

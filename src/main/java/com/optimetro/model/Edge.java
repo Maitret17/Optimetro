@@ -1,27 +1,27 @@
 package com.optimetro.model;
 
 public class Edge {
-    private StationNode stationA;
-    private StationNode stationB;
+    private StationNode fromStation;
+    private StationNode toStation;
     private TravelType travelType;
 
     private double timeCost;
     private double pollutionCost;
 
-    public Edge(StationNode stationA, StationNode stationB, TravelType travelType, double timeCost, double pollutionCost) {
-        this.stationA = stationA;
-        this.stationB = stationB;
+    public Edge(StationNode fromStation, StationNode toStation, TravelType travelType, double timeCost, double pollutionCost) {
+        this.fromStation = fromStation;
+        this.toStation = toStation;
         this.travelType = travelType;
         this.timeCost = timeCost;
         this.pollutionCost = pollutionCost;
     }
 
-    public StationNode getStationA() {
-        return stationA;
+    public StationNode getFromStation() {
+        return fromStation;
     }
 
-    public StationNode getStationB() {
-        return stationB;
+    public StationNode getToStation() {
+        return toStation;
     }
 
     public TravelType getTravelType() {
@@ -29,36 +29,27 @@ public class Edge {
     }
 
     public double getTimeCost() {
-        return timeCost; }
+        return timeCost;
+    }
 
     public double getPollutionCost() {
         return pollutionCost;
     }
 
-    public double getCost(CostType costType){
+    public double getCost(CostType costType) {
         switch (costType) {
             case TIME:
-                return getTimeCost();
+                return timeCost;
             case CARBON:
-                return getPollutionCost();
+                return pollutionCost;
             default:
                 throw new IllegalArgumentException("Unknown cost type");
         }
     }
 
-    public StationNode getOtherStation(StationNode current) {
-        if (current.equals(stationA)) {
-            return stationB;
-        } else if (current.equals(stationB)) {
-            return stationA;
-        } else {
-            throw new IllegalArgumentException("Station is not connected to this edge.");
-        }
-    }
-
     @Override
     public String toString() {
-        return stationA + " <-> " + stationB +
+        return fromStation + " -> " + toStation +
                 " | " + travelType +
                 " | time: " + timeCost + " min" +
                 " | pollution: " + pollutionCost;
