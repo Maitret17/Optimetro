@@ -34,6 +34,11 @@ header {
   font-weight: 500;
   color: #757575;
   transition: 0.2s;
+  
+}
+
+.bandeau a:hover{
+  color :rgb(36, 62, 172);
 }
 
 
@@ -84,20 +89,32 @@ footer{
 /* itinéraire */
 
 #recherche_itineraire {
-  width: 320px;
+  width: 340px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 24px;
 }
 
-#recherche_itineraire h2 {
-  font-size: 1.8rem;
+.recherche_card {
+  background: white;
+  border: 1px solid #d8dde5;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.recherche_card h2 {
+  margin: 0;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #222;
 }
 
-#recherche_itineraire form {
+.recherche_card form {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -222,8 +239,12 @@ footer{
 }
 
 .nbr_itineraire {
-  font-size: 0.95rem;
-  color: #8a8a8a;
+  margin: 0 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #9b9b9b;
 }
 
 .liste_itineraire {
@@ -293,10 +314,17 @@ footer{
 
 /* carte */
 
+.itineraire_droite {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .map-container {
   position: relative;
-  flex: 1;
-  height: 700px;
+  height: 560px;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
@@ -309,18 +337,11 @@ footer{
 }
 
 .fenetre-flottante {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  width: 360px;
-  max-height: calc(100% - 60px);
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border-radius: 22px;
-  padding: 22px;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
-  z-index: 999;
+  background: white;
+  border: 1px solid #d8dde5;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
 .fenetre-header {

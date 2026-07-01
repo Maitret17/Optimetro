@@ -36,47 +36,49 @@
     <main class="main_itineraire">
       <div class="side_by_side">
         <section id="recherche_itineraire">
-          <form action="#" method="get">
+          <div class="recherche_card">
             <h2>Rechercher un trajet</h2>
 
-            <div class="trajet-box">
-              <div class="trajet-row">
-                <span class="point depart"></span>
-                <input
-                  type="text"
-                  name="depart"
-                  placeholder="Départ — EFREI Paris"
-                />
+            <form action="#" method="get">
+              <div class="trajet-box">
+                <div class="trajet-row">
+                  <span class="point depart"></span>
+                  <input
+                    type="text"
+                    name="depart"
+                    placeholder="Départ — EFREI Paris"
+                  />
+                </div>
+
+                <div class="trajet-row">
+                  <span class="point arrivee"></span>
+                  <input
+                    type="text"
+                    name="arrivee"
+                    placeholder="Arrivée — Châtelet"
+                  />
+
+                  <button
+                    type="button"
+                    class="swap"
+                    aria-label="Inverser départ et arrivée"
+                  >
+                    ↕
+                  </button>
+                </div>
               </div>
 
-              <div class="trajet-row">
-                <span class="point arrivee"></span>
-                <input
-                  type="text"
-                  name="arrivee"
-                  placeholder="Arrivée — Châtelet"
-                />
-
-                <button
-                  type="button"
-                  class="swap"
-                  aria-label="Inverser départ et arrivée"
-                >
-                  ↕
-                </button>
+              <div class="trajet_mode">
+                <button type="button" class="transport">Métro</button>
+                <button type="button" class="transport">RER / TER</button>
+                <button type="button" class="transport">Tramway</button>
               </div>
-            </div>
 
-            <div class="trajet_mode">
-              <button type="button" class="transport">Métro</button>
-              <button type="button" class="transport">RER / TER</button>
-              <button type="button" class="transport">Tramway</button>
-            </div>
-
-            <button type="submit" class="trajet_submit">
-              Calculer le trajet optimal
-            </button>
-          </form>
+              <button type="submit" class="trajet_submit">
+                Calculer le trajet optimal
+              </button>
+            </form>
+          </div>
 
           <div class="trajet_result">
             <p class="nbr_itineraire">
@@ -98,8 +100,10 @@
           </div>
         </section>
 
-        <section class="map-container">
-          <div id="map"></div>
+        <section class="itineraire_droite">
+          <div class="map-container">
+            <div id="map"></div>
+          </div>
 
           <div class="fenetre-flottante">
             <div class="fenetre-header">
@@ -121,15 +125,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../script/script.js"></script>
 
-<<<<<<< HEAD
-
-    <footer>
-        <p>©2026 | Projet Métro-EFREI-Dodo | Mastercamp IT4 groupe B</p>
-
-=======
     <footer>
       <p>©2026 | Projet Métro-EFREI-Dodo | Mastercamp IT4 groupe B</p>
->>>>>>> 0745956 (Appel API alerte)
     </footer>
   </body>
 </html>
