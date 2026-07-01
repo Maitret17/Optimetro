@@ -1,24 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>graph</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-</head>
-<body>
-    <header> <!-- nom du site + lien pour les page itinéraires, CO2, alerte (si on garde ?) et historique (si on garde)? -->
-        <div id="titre">
-            <h1>AuptiMétro</h1>
-        </div>
-        <nav class="bandeau">
-            <a href="../html/itineraire.html">Itinéraire</a>
-            <a href="../html/alerte.html">Alerte réseau</a>
-            <a href="../html/graph.html">Graphe</a>
-        </nav>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  </head>
+  <body>
+    <header>
+      <!-- nom du site + lien pour les page itinéraires, CO2, alerte (si on garde ?) et historique (si on garde)? -->
+      <div id="titre">
+        <a href="../html/itineraire.html" class="logo-link"
+          ><img
+            src="../image/logo-img.png"
+            alt="Logo AuptiMétro"
+            class="logo-img" /><img
+            src="../image/logo-texte.png"
+            alt="AuptiMétro"
+            class="logo-txt"
+        /></a>
+      </div>
+      <nav class="bandeau">
+        <a href="../html/itineraire.html">Itinéraire</a>
+        <a href="../html/alerte.html">Alerte réseau</a>
+        <a href="../html/graph.html">Graphe</a>
+      </nav>
     </header>
 
     <main class="page_graph">
+<<<<<<< HEAD
         <section class="graph_section">
             <h2>Graphe complet du réseau</h2>
 
@@ -42,3 +52,35 @@
 
     
 </html>
+=======
+      <section class="graph_section">
+        <h2>Graphe complet du réseau</h2>
+
+        <object
+          id="graph_complet"
+          class="graph_svg"
+          data="../svg/graph.svg"
+          type="image/svg+xml"
+        ></object>
+      </section>
+
+      <section class="graph_section">
+        <h2>Graphe géographique</h2>
+
+        <object
+          id="graph_geo"
+          class="graph_svg"
+          data="../svg/graph_geographique.svg"
+          type="image/svg+xml"
+        ></object>
+      </section>
+      <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+      <script src="../script/graph.js"></script>
+    </main>
+
+    <footer>
+      <p>©2026 | Projet Métro-EFREI-Dodo | Mastercamp IT4 groupe B</p>
+    </footer>
+  </body>
+</html>
+>>>>>>> 0745956 (Appel API alerte)
