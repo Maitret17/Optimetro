@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-function alert(){
 
-    pHlRkfAs1qWKQcNsTCd6Bxx4QGg5R2aL
-}
-=======
-// alert.js — Alerte réseau AuptiMétro
-// Récupère en direct l'état du trafic (Métro / RER / Train / Tramway)
-// depuis l'API officielle "Messages Info Trafic" d'Île-de-France Mobilités (PRIM),
-// technologie Navitia : https://prim.iledefrance-mobilites.fr/
 
 // Clé API PRIM (compte gratuit sur prim.iledefrance-mobilites.fr)
 const PRIM_API_KEY = "CGnvto2erSxnpK3I2UJHT66c2yKRcf8U";
 
-// Seuls le métro, le RER et le tramway nous intéressent ici :
-// on exclut bus, cars et trains/Transilien directement dans la requête.
 const PRIM_ENDPOINT =
   "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/line_reports/line_reports" +
   "?count=300" +
@@ -204,8 +193,6 @@ function mapSeverite(severity) {
 function extraireMessage(messages) {
   if (!Array.isArray(messages) || messages.length === 0) return "";
 
-  // Certaines perturbations ont plusieurs messages (un par canal : rss, web, titre...).
-  // On garde le plus complet pour éviter les descriptions tronquées ou vides.
   let meilleur = "";
   messages.forEach((m) => {
     const texte = nettoyerTexte(m.text || "");
@@ -306,4 +293,3 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
->>>>>>> 0745956 (Appel API alerte)
