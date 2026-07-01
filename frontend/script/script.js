@@ -161,19 +161,29 @@ function afficherCarte(trajet) {
     zoomControl: true,
   }).setView(depart, 13);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
-    maxZoom: 19,
-  }).addTo(map);
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    {
+      attribution:
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 20,
+    },
+  ).addTo(map);
 
   const points = [];
 
   trajet.forEach((etape, index) => {
     const position = coordonnees[etape.station];
-
     points.push(position);
 
-    const marker = L.marker(position).addTo(map);
+    const marker = L.circleMarker(position, {
+      radius: 7,
+      color: "#2368a8",
+      weight: 3,
+      fillColor: "#2368a8",
+      fill : true,
+      fillOpacity: 1,
+    }).addTo(map);
 
     marker.bindPopup(`
       <b>${etape.station}</b><br>
@@ -186,15 +196,16 @@ function afficherCarte(trajet) {
   });
 
   L.polyline(points, {
-    color: "blue",
+    color: "#2368a8",
     weight: 5,
-    opacity: 0.8,
+    opacity: 1,
   }).addTo(map);
 
   map.fitBounds(points, {
     padding: [40, 40],
   });
 }
+
 
 function convertirRouteBackend(route) {
   const trajet = [];
