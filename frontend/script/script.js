@@ -14,6 +14,86 @@ const coordonnees = {
   Châtelet: [48.8586, 2.347],
 };
 
+const lineColors = {
+  // Métro
+  "1": "#FFCE00",
+  "2": "#0064B0",
+  "3": "#9F9825",
+  "3bis": "#98D4E2",
+  "4": "#C04191",
+  "5": "#F28E42",
+  "6": "#83C491",
+  "7": "#F3A4BA",
+  "7bis": "#83C491",
+  "8": "#CEADD2",
+  "9": "#D5C900",
+  "10": "#E3B32A",
+  "11": "#8D5E2A",
+  "12": "#00814F",
+  "13": "#98D4E2",
+  "14": "#662483",
+
+  // RER
+  "A": "#E3051C",
+  "B": "#5291CE",
+  "C": "#FFCE00",
+  "D": "#00814F",
+  "E": "#C04191",
+
+  // Tramway
+  "T1": "#0064B0",
+  "T2": "#C04191",
+  "T3a": "#F28E42",
+  "T3b": "#00814F",
+  "T4": "#E3B32A",
+  "T5": "#662483",
+  "T6": "#E3051C",
+  "T7": "#8D5E2A",
+  "T8": "#9F9825",
+  "T9": "#5291CE",
+  "T10": "#9F9825",
+  "T11": "#F28E42",
+  "T12": "#B90845",
+  "T13": "#8D5E2A",
+  "T14": "#00A88F",
+
+  // Transilien / Train
+  "H": "#8D5E2A",
+  "J": "#D5C900",
+  "K": "#9F9825",
+  "L": "#CEADD2",
+  "N": "#00A88F",
+  "P": "#F28E42",
+  "R": "#F3A4BA",
+  "U": "#B90845",
+  "V": "#9F9825",
+
+  // Placeholder
+  "TER": "#25303B",
+  "Train": "#25303B",
+  "Transilien": "#25303B"
+};
+
+function normalizeLineKey(ligne) {
+  if (!ligne) {
+    return "";
+  }
+
+  return ligne
+      .replace("Métro", "")
+      .replace("Metro", "")
+      .replace("Ligne", "")
+      .replace("RER", "")
+      .replace("TER", "TER")
+      .replace("Train", "Train")
+      .trim();
+}
+
+function getLineColor(ligne) {
+  const key = normalizeLineKey(ligne);
+  return lineColors[key] || "#2368a8";
+}
+
 let stationsByLabel = new Map();
 
 function getStationLabel(station) {
@@ -51,12 +131,17 @@ function afficherTrajet(trajet) {
 
   trajet.forEach((etape, index) => {
     const estDerniere = index === trajet.length - 1;
+    const color = getLineColor(etape.ligne);
 
     timeline.innerHTML += `
       <div class="etape">
         <div class="ligne_visuelle">
-          <div class="point_station"></div>
-          ${!estDerniere ? '<div class="segment"></div>' : ""}
+          <div class="point_station" style="border-color: ${color};"></div>
+          ${
+        !estDerniere
+            ? `<div class="segment" style="background: ${color};"></div>`
+            : ""
+    }
         </div>
 
         <div class="contenu_station">
