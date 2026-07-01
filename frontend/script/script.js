@@ -14,6 +14,36 @@ const coordonnees = {
   Châtelet: [48.8586, 2.347],
 };
 
+let stationsByLabel = new Map();
+
+function getStationLabel(station) {
+  return `${station.name} [${station.line}]`;
+}
+
+async function chargerStations() {
+  const response = await fetch("http://localhost:8080/api/stations");
+
+  if (!response.ok) {
+    throw new Error("Impossible de charger les stations");
+  }
+
+  const stations = await response.json();
+  const datalist = document.getElementById("station-list");
+
+  datalist.innerHTML = "";
+  stationsByLabel.clear();
+
+  stations.forEach((station) => {
+    const label = getStationLabel(station);
+
+    stationsByLabel.set(label, station.id);
+
+    const option = document.createElement("option");
+    option.value = label;
+    datalist.appendChild(option);
+  });
+}
+
 function afficherTrajet(trajet) {
   const timeline = document.getElementById("timeline_trajet");
 
@@ -81,8 +111,104 @@ function afficherCarte(trajet) {
   });
 }
 
-afficherTrajet(trajetTest);
-afficherCarte(trajetTest);
+function convertirRouteBackend(route) {
+  const trajet = [];
+
+  if (route.length === 0) {
+    return trajet;
+  }
+
+  trajet.push({
+    station: route[0].fromStation.name,
+    ligne: route[0].fromStation.line,
+    changement: false,
+  });
+
+  route.forEach((edge) => {
+    trajet.push({
+      station: edge.toStation.name,
+      ligne: edge.toStation.line,
+      changement: edge.travelType === "TRANSFER",
+    });
+  });
+
+  return trajet;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  afficherTrajet(trajetTest);
+  afficherCarte(trajetTest);
+
+  const form = document.getElementById("route-form");
+  const results = document.getElementById("route-results");
+  const departInput = document.getElementById("depart-input");
+  const arriveeInput = document.getElementById("arrivee-input");
+
+  chargerStations().catch((error) => {
+    console.error(error);
+  });
+
+  if (!form || !results) {
+    console.warn("Formulaire ou zone de résultat introuvable.");
+    return;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const fromId = stationsByLabel.get(departInput.value);
+    const toId = stationsByLabel.get(arriveeInput.value);
+
+    if (!fromId || !toId) {
+      results.innerHTML = `
+      <article class="itineraire">
+        <h3>Station inconnue</h3>
+        <p>Choisis une station proposée dans la liste.</p>
+      </article>
+    `;
+      return;
+    }
+
+    try {
+      const response = await fetch(
+          `http://localhost:8080/api/route?from=${fromId}&to=${toId}&costType=TIME`
+      );
+
+      if (!response.ok) {
+        throw new Error("Erreur backend");
+      }
+
+      const route = await response.json();
+      const trajet = convertirRouteBackend(route);
+
+      afficherTrajet(trajet);
+
+      results.innerHTML = `
+        <article class="itineraire" data-type="optimal">
+          <div class="itineraire_header">
+            <span class="badge">Optimal</span>
+            <span class="co2">Backend</span>
+          </div>
+
+          <h3 class="duree">${route.length} étapes</h3>
+
+          <p class="details">
+            ${trajet.map(etape => `${etape.station} (${etape.ligne})`).join(" → ")}
+          </p>
+        </article>
+      `;
+    } catch (error) {
+      console.error(error);
+
+      results.innerHTML = `
+        <article class="itineraire">
+          <h3>Erreur</h3>
+          <p>Impossible de récupérer l'itinéraire depuis le backend.</p>
+        </article>
+      `;
+    }
+  });
+});
 
 const fenetre = document.querySelector(".fenetre-flottante");
 const closeButton = document.querySelector(".fenetre-close");
@@ -121,3 +247,6 @@ document.addEventListener("mouseup", function () {
   isDragging = false;
   fenetre.style.cursor = "grab";
 });
+
+
+
