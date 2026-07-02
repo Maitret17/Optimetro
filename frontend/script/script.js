@@ -7,12 +7,17 @@ const trajetTest = [
   { station: "Châtelet", ligne: "Métro 1", changement: false },
 ];
 
+// Placeholder coord
 const coordonnees = {
   "EFREI Paris": [48.7889, 2.363],
   "Kremlin-Bicêtre": [48.8103, 2.3629],
   "Place d'Italie": [48.8315, 2.3557],
   Châtelet: [48.8586, 2.347],
 };
+
+let map = null;
+let routeLayer = null;
+let markersLayer = null;
 
 const lineColors = {
   // Métro
@@ -154,36 +159,60 @@ function afficherTrajet(trajet) {
   });
 }
 
-function afficherCarte(trajet) {
-  const depart = coordonnees[trajet[0].station];
+function getEtapePosition(etape) {
+  if (etape.latitude != null && etape.longitude != null) {
+    return [etape.latitude, etape.longitude];
+  }
 
-  const map = L.map("map", {
+  return coordonnees[etape.station];
+}
+
+function initialiserCarte(positionDepart) {
+  if (map) {
+    return;
+  }
+
+  map = L.map("map", {
     zoomControl: true,
-  }).setView(depart, 13);
+  }).setView(positionDepart, 13);
 
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-    {
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: 20,
-    },
-  ).addTo(map);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap",
+    maxZoom: 19,
+  }).addTo(map);
+}
 
-  const points = [];
+function afficherCarte(trajet) {
+  const points = trajet
+      .map(getEtapePosition)
+      .filter((position) => position != null);
+
+  if (points.length === 0) {
+    console.warn("Aucune coordonnée disponible pour ce trajet.");
+    return;
+  }
+
+  initialiserCarte(points[0]);
+
+  if (routeLayer) {
+    map.removeLayer(routeLayer);
+  }
+
+  if (markersLayer) {
+    map.removeLayer(markersLayer);
+  }
+
+  routeLayer = L.layerGroup().addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
 
   trajet.forEach((etape, index) => {
-    const position = coordonnees[etape.station];
-    points.push(position);
+    const position = getEtapePosition(etape);
 
-    const marker = L.circleMarker(position, {
-      radius: 7,
-      color: "#2368a8",
-      weight: 3,
-      fillColor: "#2368a8",
-      fill : true,
-      fillOpacity: 1,
-    }).addTo(map);
+    if (!position) {
+      return;
+    }
+
+    const marker = L.marker(position).addTo(markersLayer);
 
     marker.bindPopup(`
       <b>${etape.station}</b><br>
@@ -195,11 +224,15 @@ function afficherCarte(trajet) {
     }
   });
 
-  L.polyline(points, {
-    color: "#2368a8",
-    weight: 5,
-    opacity: 1,
-  }).addTo(map);
+  for (let i = 0; i < points.length - 1; i++) {
+    const color = getLineColor(trajet[i].ligne);
+
+    L.polyline([points[i], points[i + 1]], {
+      color: color,
+      weight: 5,
+      opacity: 0.8,
+    }).addTo(routeLayer);
+  }
 
   map.fitBounds(points, {
     padding: [40, 40],
@@ -218,6 +251,8 @@ function convertirRouteBackend(route) {
     station: route[0].fromStation.name,
     ligne: route[0].fromStation.line,
     changement: false,
+    latitude: route[0].fromStation.latitude,
+    longitude: route[0].fromStation.longitude,
   });
 
   route.forEach((edge) => {
@@ -225,6 +260,8 @@ function convertirRouteBackend(route) {
       station: edge.toStation.name,
       ligne: edge.toStation.line,
       changement: edge.travelType === "TRANSFER",
+      latitude: edge.toStation.latitude,
+      longitude: edge.toStation.longitude,
     });
   });
 
@@ -278,6 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const trajet = convertirRouteBackend(route);
 
       afficherTrajet(trajet);
+      afficherCarte(trajet);
+
 
       results.innerHTML = `
         <article class="itineraire" data-type="optimal">
