@@ -268,6 +268,53 @@ function convertirRouteBackend(route) {
   return trajet;
 }
 
+function calculerDuree(route) {
+  const total = route.reduce((sum, edge) => {
+    return sum + (Number(edge.timeCost) || 0);
+  }, 0);
+
+  return Math.round(total);
+}
+
+function calculerCo2(route) {
+  const total = route.reduce((sum, edge) => {
+    return sum + (Number(edge.pollutionCost) || 0);
+  }, 0);
+  if (total < 1000) {
+    return `${total.toFixed(1)} g`;
+  }
+
+  return `${(total / 1000).toFixed(2)} kg`;
+}
+
+function compterChangements(route) {
+  return route.filter((edge) => edge.travelType === "TRANSFER").length;
+}
+
+function formatLineLabel(ligne) {
+  const key = normalizeLineKey(ligne);
+
+  if (/^\d/.test(key)) {
+    return `L${key}`;
+  }
+
+  return key;
+}
+
+function getLignesResume(trajet) {
+  const lignes = [];
+
+  trajet.forEach((etape) => {
+    const ligne = formatLineLabel(etape.ligne);
+
+    if (ligne && lignes[lignes.length - 1] !== ligne) {
+      lignes.push(ligne);
+    }
+  });
+
+  return lignes.join(" -> ");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   afficherTrajet(trajetTest);
   afficherCarte(trajetTest);
@@ -318,20 +365,25 @@ document.addEventListener("DOMContentLoaded", () => {
       afficherCarte(trajet);
 
 
+      const duree = calculerDuree(route);
+      const co2 = calculerCo2(route);
+      const changements = compterChangements(route);
+      const lignesResume = getLignesResume(trajet);
+
       results.innerHTML = `
         <article class="itineraire" data-type="optimal">
-          <div class="itineraire_header">
-            <span class="badge">Optimal</span>
-            <span class="co2">Backend</span>
-          </div>
+            <div class="itineraire_header">
+                <span class="badge">Optimal</span>
+                <span class="co2">${co2}</span>
+            </div>
 
-          <h3 class="duree">${route.length} étapes</h3>
+            <h3 class="duree">${duree} min</h3>
 
-          <p class="details">
-            ${trajet.map(etape => `${etape.station} (${etape.ligne})`).join(" → ")}
-          </p>
-        </article>
-      `;
+            <p class="details">
+                ${trajet.length} stations - ${changements} changement${changements > 1 ? "s" : ""} - ${lignesResume}
+            </p>
+        </article> 
+        `;
     } catch (error) {
       console.error(error);
 
