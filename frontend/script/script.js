@@ -176,10 +176,14 @@ function initialiserCarte(positionDepart) {
     zoomControl: true,
   }).setView(positionDepart, 13);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
-    maxZoom: 19,
-  }).addTo(map);
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    {
+      attribution:
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 20,
+    },
+  ).addTo(map);
 }
 
 function afficherCarte(trajet) {
@@ -205,6 +209,16 @@ function afficherCarte(trajet) {
   routeLayer = L.layerGroup().addTo(map);
   markersLayer = L.layerGroup().addTo(map);
 
+  for (let i = 0; i < points.length - 1; i++) {
+    const color = getLineColor(trajet[i].ligne);
+
+    L.polyline([points[i], points[i + 1]], {
+      color: color,
+      weight: 5,
+      opacity: 0.8,
+    }).addTo(routeLayer);
+  }
+
   trajet.forEach((etape, index) => {
     const position = getEtapePosition(etape);
 
@@ -212,7 +226,16 @@ function afficherCarte(trajet) {
       return;
     }
 
-    const marker = L.marker(position).addTo(markersLayer);
+    const color = getLineColor(etape.ligne);
+
+    const marker = L.circleMarker(position, {
+      radius: 7,
+      color: color,
+      weight: 2,
+      fill: true,
+      fillColor: color,
+      fillOpacity: 1,
+    }).addTo(markersLayer);
 
     marker.bindPopup(`
       <b>${etape.station}</b><br>
@@ -223,16 +246,6 @@ function afficherCarte(trajet) {
       marker.openPopup();
     }
   });
-
-  for (let i = 0; i < points.length - 1; i++) {
-    const color = getLineColor(trajet[i].ligne);
-
-    L.polyline([points[i], points[i + 1]], {
-      color: color,
-      weight: 5,
-      opacity: 0.8,
-    }).addTo(routeLayer);
-  }
 
   map.fitBounds(points, {
     padding: [40, 40],
@@ -434,6 +447,3 @@ document.addEventListener("mouseup", function () {
   isDragging = false;
   fenetre.style.cursor = "grab";
 });
-
-
-
