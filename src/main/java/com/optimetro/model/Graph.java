@@ -1,8 +1,13 @@
 package com.optimetro.model;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
 
 public class Graph {
     private final ArrayList<Edge> edges;
@@ -12,6 +17,7 @@ public class Graph {
         this.edges = new ArrayList<>();
         this.adjacencyList = new HashMap<>();
     }
+
 
     public void addStation(StationNode station) {
         adjacencyList.putIfAbsent(station, new ArrayList<>());
@@ -53,6 +59,40 @@ public class Graph {
 
             for (Edge edge : adjacencyList.get(station)) {
                 System.out.println("  -> " + edge.getToStation() + " | " + edge);
+            }
+        }
+    }
+    public void exportToCsv() throws IOException {
+
+        String nodesFile= "nodes.csv";
+        String edgesFile="edges.csv";
+        try (PrintWriter out = new PrintWriter(new FileWriter(nodesFile))) {
+
+            out.println("Id,Label,Line,Latitude,Longitude");
+
+            for (StationNode station : getStations()) {
+                out.printf("%s,%s,%s,%f,%f%n",
+                        station.getId(),
+                        station.getName(),
+                        station.getLine(),
+                        station.getLatitude(),
+                        station.getLongitude());
+            }
+        }
+
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(edgesFile))) {
+
+            out.println("Source,Target,Type,TravelType,TimeCost,PollutionCost,Weight");
+
+            for (Edge edge : getEdges()) {
+                out.printf("%s,%s,Directed,%s,%f,%f,%f%n",
+                        edge.getFromStation().getId(),
+                        edge.getToStation().getId(),
+                        edge.getTravelType(),
+                        edge.getTimeCost(),
+                        edge.getPollutionCost(),
+                        edge.getTimeCost());
             }
         }
     }
