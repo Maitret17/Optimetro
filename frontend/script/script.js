@@ -247,6 +247,26 @@ function afficherCarte(trajet) {
     }
   });
 
+  // Pin distinctif sur la station d'arrivée, cohérent avec le point rouge
+  // utilisé dans le formulaire de recherche.
+  const dernierePosition = points[points.length - 1];
+  const derniereEtape = trajet[trajet.length - 1];
+
+  const pinArrivee = L.divIcon({
+    className: "pin-arrivee",
+    html: '<div class="pin-arrivee-forme"></div>',
+    iconSize: [26, 34],
+    iconAnchor: [13, 34],
+    popupAnchor: [0, -34],
+  });
+
+  L.marker(dernierePosition, { icon: pinArrivee })
+    .addTo(markersLayer)
+    .bindPopup(`
+      <b>${derniereEtape.station}</b><br>
+      Arrivée
+    `);
+
   map.fitBounds(points, {
     padding: [40, 40],
   });
@@ -344,6 +364,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form || !results) {
     console.warn("Formulaire ou zone de résultat introuvable.");
     return;
+  }
+
+  const swapButton = document.querySelector(".swap");
+
+  if (swapButton) {
+    swapButton.addEventListener("click", () => {
+      const valeurDepart = departInput.value;
+      departInput.value = arriveeInput.value;
+      arriveeInput.value = valeurDepart;
+    });
   }
 
   form.addEventListener("submit", async (event) => {
