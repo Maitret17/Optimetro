@@ -1,10 +1,12 @@
 package com.optimetro.service;
 
+import com.optimetro.algorithm.Kruskal;
 import com.optimetro.model.*;
 import org.springframework.stereotype.Service;
 
 // For the csv
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -17,10 +19,12 @@ public class GraphService {
     private final Graph graph;
     private final HashMap<String, StationNode> stationsById;
 
-    public GraphService() {
+    public GraphService() throws IOException {
         this.graph = new Graph();
         this.stationsById = new HashMap<>();
         loadCsvGraph();
+        Kruskal.Acpm(this.graph,CostType.TIME).exportToCsv();
+
     }
 
     public Graph getGraph() {

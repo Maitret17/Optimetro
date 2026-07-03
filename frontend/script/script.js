@@ -178,10 +178,14 @@ function initialiserCarte(positionDepart) {
     zoomControl: true,
   }).setView(positionDepart, 13);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
-    maxZoom: 19,
-  }).addTo(map);
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    {
+      attribution:
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 20,
+    },
+  ).addTo(map);
 }
 
 function afficherCarte(trajet) {
@@ -207,6 +211,16 @@ function afficherCarte(trajet) {
   routeLayer = L.layerGroup().addTo(map);
   markersLayer = L.layerGroup().addTo(map);
 
+  for (let i = 0; i < points.length - 1; i++) {
+    const color = getLineColor(trajet[i].ligne);
+
+    L.polyline([points[i], points[i + 1]], {
+      color: color,
+      weight: 5,
+      opacity: 0.8,
+    }).addTo(routeLayer);
+  }
+
   trajet.forEach((etape, index) => {
     const position = getEtapePosition(etape);
 
@@ -214,7 +228,16 @@ function afficherCarte(trajet) {
       return;
     }
 
-    const marker = L.marker(position).addTo(markersLayer);
+    const color = getLineColor(etape.ligne);
+
+    const marker = L.circleMarker(position, {
+      radius: 7,
+      color: color,
+      weight: 2,
+      fill: true,
+      fillColor: color,
+      fillOpacity: 1,
+    }).addTo(markersLayer);
 
     marker.bindPopup(`
       <b>${etape.station}</b><br>
@@ -226,15 +249,25 @@ function afficherCarte(trajet) {
     }
   });
 
-  for (let i = 0; i < points.length - 1; i++) {
-    const color = getLineColor(trajet[i].ligne);
+  // Pin distinctif sur la station d'arrivée, cohérent avec le point rouge
+  // utilisé dans le formulaire de recherche.
+  const dernierePosition = points[points.length - 1];
+  const derniereEtape = trajet[trajet.length - 1];
 
-    L.polyline([points[i], points[i + 1]], {
-      color: color,
-      weight: 5,
-      opacity: 0.8,
-    }).addTo(routeLayer);
-  }
+  const pinArrivee = L.divIcon({
+    className: "pin-arrivee",
+    html: '<div class="pin-arrivee-forme"></div>',
+    iconSize: [26, 34],
+    iconAnchor: [13, 34],
+    popupAnchor: [0, -34],
+  });
+
+  L.marker(dernierePosition, { icon: pinArrivee })
+    .addTo(markersLayer)
+    .bindPopup(`
+      <b>${derniereEtape.station}</b><br>
+      Arrivée
+    `);
 
   map.fitBounds(points, {
     padding: [40, 40],
@@ -356,6 +389,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const swapButton = document.querySelector(".swap");
+
+  if (swapButton) {
+    swapButton.addEventListener("click", () => {
+      const valeurDepart = departInput.value;
+      departInput.value = arriveeInput.value;
+      arriveeInput.value = valeurDepart;
+    });
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -457,6 +500,3 @@ document.addEventListener("mouseup", function () {
   isDragging = false;
   fenetre.style.cursor = "grab";
 });
-
-
-
