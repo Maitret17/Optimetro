@@ -19,6 +19,8 @@ let map = null;
 let routeLayer = null;
 let markersLayer = null;
 
+let selectedCostType = "TIME";
+
 const lineColors = {
   // Métro
   "1": "#FFCE00",
@@ -268,9 +270,20 @@ function convertirRouteBackend(route) {
   return trajet;
 }
 
+const TRANSFER_WAIT_MINUTES = 5;
+const STOP_TIME_MINUTES = 40 / 60;
+
 function calculerDuree(route) {
   const total = route.reduce((sum, edge) => {
-    return sum + (Number(edge.timeCost) || 0);
+    let edgeTime = Number(edge.timeCost) || 0;
+
+    if (edge.travelType === "TRANSFER") {
+      edgeTime += TRANSFER_WAIT_MINUTES;
+    } else {
+      edgeTime += STOP_TIME_MINUTES;
+    }
+
+    return sum + edgeTime;
   }, 0);
 
   return Math.round(total);
@@ -323,6 +336,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const results = document.getElementById("route-results");
   const departInput = document.getElementById("depart-input");
   const arriveeInput = document.getElementById("arrivee-input");
+  const costButtons = document.querySelectorAll(".cost-option");
+
+  costButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      costButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      selectedCostType = button.dataset.costType;
+    });
+  });
 
   chargerStations().catch((error) => {
     console.error(error);
@@ -351,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-          `http://localhost:8080/api/route?from=${fromId}&to=${toId}&costType=TIME`
+          `http://localhost:8080/api/route?from=${fromId}&to=${toId}&costType=${selectedCostType}`
       );
 
       if (!response.ok) {
