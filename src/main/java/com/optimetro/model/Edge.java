@@ -37,11 +37,27 @@ public class Edge {
     }
 
     public double getCost(CostType costType) {
+        double cost;
+
         switch (costType) {
             case TIME:
-                return timeCost;
+                cost = timeCost;
+
+                if (travelType == TravelType.TRANSFER) {
+                    cost += 5.0; // 5 minutes penalty for waiting/changing
+                }
+
+                return cost;
+
             case CARBON:
-                return pollutionCost;
+                cost = pollutionCost;
+
+                if (travelType == TravelType.TRANSFER) {
+                    cost += 15.0; // virtual penalty to avoid useless transfers
+                }
+
+                return cost;
+
             default:
                 throw new IllegalArgumentException("Unknown cost type");
         }

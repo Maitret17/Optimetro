@@ -78,9 +78,13 @@
                 <datalist id="station-list"></datalist>
 
                 <div class="trajet_mode">
-                    <button type="button" class="transport">Métro</button>
-                    <button type="button" class="transport">RER / TER</button>
-                    <button type="button" class="transport">Tramway</button>
+                    <button type="button" class="transport cost-option active" data-cost-type="TIME">
+                        ⏱ Temps
+                    </button>
+
+                    <button type="button" class="transport cost-option" data-cost-type="CARBON">
+                        🌱 Moins polluant
+                    </button>
                 </div>
 
                 <button type="submit" class="trajet_submit">
