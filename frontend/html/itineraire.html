@@ -51,7 +51,7 @@
                                 list="station-list"
                                 type="text"
                                 name="depart"
-                                placeholder="Départ — Porte de Versailles [12]"
+                                placeholder="Départ"
                         />
                     </div>
 
@@ -62,7 +62,7 @@
                                 list="station-list"
                                 type="text"
                                 name="arrivee"
-                                placeholder="Arrivée — Villejuif - Louis Aragon [7]"
+                                placeholder="Arrivée"
                         />
 
                         <button
@@ -92,33 +92,23 @@
                 </button>
             </form>
 
-            <div class="trajet_result">
+            <!-- EMPTY BY DEFAULT: route card appears only after a search -->
+            <div class="trajet_result hidden" id="trajet-result">
                 <p class="nbr_itineraire">
-                    Itinéraire trouvé : <span id="nb_itineraires">1</span>
+                    Itinéraire trouvé : <span id="nb_itineraires">0</span>
                 </p>
 
-                <div class="liste_itineraire" id="route-results">
-                    <article class="itineraire" data-type="optimal">
-                        <div class="itineraire_header">
-                            <span class="badge">Optimal</span>
-                            <span class="co2">0.4 g</span>
-                        </div>
-
-                        <h3 class="duree">18 min</h3>
-
-                        <p class="details">3 stations - 1 changement - L7 → L1</p>
-                    </article>
-                </div>
+                <div class="liste_itineraire" id="route-results"></div>
             </div>
         </section>
 
         <section class="map-container">
             <div id="map"></div>
 
-            <div class="fenetre-flottante">
+            <!-- EMPTY BY DEFAULT: route detail appears only after a search -->
+            <div class="fenetre-flottante hidden" id="route-details-panel">
                 <div class="fenetre-header">
                     <h2>Détail du trajet</h2>
-                    
                 </div>
 
                 <div id="timeline_trajet" class="timeline_trajet"></div>

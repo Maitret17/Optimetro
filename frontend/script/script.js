@@ -1,20 +1,6 @@
 console.log("script chargé");
 
-const trajetTest = [
-  { station: "EFREI Paris", ligne: "Métro 7", changement: false },
-  { station: "Kremlin-Bicêtre", ligne: "Métro 7", changement: false },
-  { station: "Place d'Italie", ligne: "Métro 7 → Métro 5", changement: true },
-  { station: "Châtelet", ligne: "Métro 1", changement: false },
-];
-
-// Placeholder coord
-const coordonnees = {
-  "EFREI Paris": [48.7889, 2.363],
-  "Kremlin-Bicêtre": [48.8103, 2.3629],
-  "Place d'Italie": [48.8315, 2.3557],
-  Châtelet: [48.8586, 2.347],
-};
-
+const coordonnees = {}
 let map = null;
 let routeLayer = null;
 let markersLayer = null;
@@ -362,14 +348,37 @@ function getLignesResume(trajet) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  afficherTrajet(trajetTest);
-  afficherCarte(trajetTest);
+  initialiserCarte([48.8566, 2.3522]);
 
   const form = document.getElementById("route-form");
   const results = document.getElementById("route-results");
   const departInput = document.getElementById("depart-input");
   const arriveeInput = document.getElementById("arrivee-input");
   const costButtons = document.querySelectorAll(".cost-option");
+  const trajetResult = document.getElementById("trajet-result");
+  const routeDetailsPanel = document.getElementById("route-details-panel");
+  const nbItineraires = document.getElementById("nb_itineraires");
+
+  if (results) {
+    results.innerHTML = "";
+  }
+
+  const timeline = document.getElementById("timeline_trajet");
+  if (timeline) {
+    timeline.innerHTML = "";
+  }
+
+  if (nbItineraires) {
+    nbItineraires.textContent = "0";
+  }
+
+  if (trajetResult) {
+    trajetResult.classList.add("hidden");
+  }
+
+  if (routeDetailsPanel) {
+    routeDetailsPanel.classList.add("hidden");
+  }
 
   costButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -406,12 +415,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const toId = stationsByLabel.get(arriveeInput.value);
 
     if (!fromId || !toId) {
+      if (trajetResult) {
+        trajetResult.classList.remove("hidden");
+      }
+
+      if (routeDetailsPanel) {
+        routeDetailsPanel.classList.add("hidden");
+      }
+
       results.innerHTML = `
-      <article class="itineraire">
-        <h3>Station inconnue</h3>
-        <p>Choisis une station proposée dans la liste.</p>
-      </article>
-    `;
+        <article class="itineraire">
+          <h3>Station inconnue</h3>
+          <p>Choisis une station proposée dans la liste.</p>
+        </article>
+      `;
       return;
     }
 
@@ -427,9 +444,38 @@ document.addEventListener("DOMContentLoaded", () => {
       const route = await response.json();
       const trajet = convertirRouteBackend(route);
 
+      if (route.length === 0 || trajet.length === 0) {
+        if (trajetResult) {
+          trajetResult.classList.remove("hidden");
+        }
+
+        if (routeDetailsPanel) {
+          routeDetailsPanel.classList.add("hidden");
+        }
+
+        results.innerHTML = `
+          <article class="itineraire">
+            <h3>Aucun trajet trouvé</h3>
+            <p>Aucun itinéraire n'a pu être calculé entre ces deux stations.</p>
+          </article>
+        `;
+        return;
+      }
+
       afficherTrajet(trajet);
       afficherCarte(trajet);
 
+      if (trajetResult) {
+        trajetResult.classList.remove("hidden");
+      }
+
+      if (routeDetailsPanel) {
+        routeDetailsPanel.classList.remove("hidden");
+      }
+
+      if (nbItineraires) {
+        nbItineraires.textContent = "1";
+      }
 
       const duree = calculerDuree(route);
       const co2 = calculerCo2(route);
@@ -438,20 +484,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       results.innerHTML = `
         <article class="itineraire" data-type="optimal">
-            <div class="itineraire_header">
-                <span class="badge">Optimal</span>
-                <span class="co2">${co2}</span>
-            </div>
+          <div class="itineraire_header">
+            <span class="badge">Optimal</span>
+            <span class="co2">${co2}</span>
+          </div>
 
-            <h3 class="duree">${duree} min</h3>
+          <h3 class="duree">${duree} min</h3>
 
-            <p class="details">
-                ${trajet.length} stations - ${changements} changement${changements > 1 ? "s" : ""} - ${lignesResume}
-            </p>
-        </article> 
-        `;
+          <p class="details">
+            ${trajet.length} stations - ${changements} changement${changements > 1 ? "s" : ""} - ${lignesResume}
+          </p>
+        </article>
+      `;
     } catch (error) {
       console.error(error);
+
+      if (trajetResult) {
+        trajetResult.classList.remove("hidden");
+      }
+
+      if (routeDetailsPanel) {
+        routeDetailsPanel.classList.add("hidden");
+      }
 
       results.innerHTML = `
         <article class="itineraire">
