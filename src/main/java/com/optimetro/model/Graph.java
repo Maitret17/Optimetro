@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 
@@ -71,7 +72,7 @@ public class Graph {
             out.println("Id,Label,Line,Latitude,Longitude");
 
             for (StationNode station : getStations()) {
-                out.printf("%s,%s,%s,%f,%f%n",
+                out.printf(Locale.US,"%s,%s,%s,%f,%f%n",
                         station.getId(),
                         station.getName(),
                         station.getLine(),
@@ -86,7 +87,7 @@ public class Graph {
             out.println("Source,Target,Type,TravelType,TimeCost,PollutionCost,Weight");
 
             for (Edge edge : getEdges()) {
-                out.printf("%s,%s,Directed,%s,%f,%f,%f%n",
+                out.printf(Locale.US,"%s,%s,Directed,%s,%f,%f,%f%n",
                         edge.getFromStation().getId(),
                         edge.getToStation().getId(),
                         edge.getTravelType(),

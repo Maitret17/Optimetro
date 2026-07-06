@@ -23,7 +23,7 @@ public class GraphService {
         this.graph = new Graph();
         this.stationsById = new HashMap<>();
         loadCsvGraph();
-        Kruskal.Acpm(this.graph,CostType.TIME).exportToCsv();
+        Kruskal.Acpm(this.graph,CostType.CARBON).exportToCsv();
 
     }
 
