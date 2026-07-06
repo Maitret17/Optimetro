@@ -486,7 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <article class="itineraire" data-type="optimal">
           <div class="itineraire_header">
             <span class="badge">Optimal</span>
-            <span class="co2">${co2}</span>
+            <span class="co2">CO₂ : ${co2}</span>
           </div>
 
           <h3 class="duree">${duree} min</h3>
