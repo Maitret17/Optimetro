@@ -635,3 +635,17 @@ main h2 {
 .hidden {
   display: none;
 }
+
+.connectivity_result {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.connectivity_ok {
+  color: #147a4c;
+}
+
+.connectivity_error {
+  color: #d94848;
+}

@@ -3,6 +3,9 @@ package com.optimetro.service;
 import com.optimetro.algorithm.Kruskal;
 import com.optimetro.model.*;
 import org.springframework.stereotype.Service;
+import com.optimetro.algorithm.Connectivity;
+import com.optimetro.algorithm.ConnectivityResult;
+
 
 // For the csv
 import java.io.BufferedReader;
@@ -195,5 +198,9 @@ public class GraphService {
         } catch (Exception e) {
             throw new RuntimeException("Error while loading edges.csv", e);
         }
+    }
+
+    public ConnectivityResult testConnectivity() {
+        return Connectivity.test(graph);
     }
 }
