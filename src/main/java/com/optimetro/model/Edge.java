@@ -44,7 +44,7 @@ public class Edge {
                 cost = timeCost;
 
                 if (travelType == TravelType.TRANSFER) {
-                    cost += 5.0; // 5 minutes penalty for waiting/changing
+                    cost += 5.0;
                 }
 
                 return cost;
@@ -53,7 +53,7 @@ public class Edge {
                 cost = pollutionCost;
 
                 if (travelType == TravelType.TRANSFER) {
-                    cost += 15.0; // virtual penalty to avoid useless transfers
+                    cost += 15.0;
                 }
 
                 return cost;
